@@ -281,7 +281,7 @@ local function sendReport()
     }
     local fa={}; for _,f in ipairs(fields) do table.insert(fa,encF(f)) end
     local desc="**"..player.Name.."**  "..EXEC_ICON.."  "..EXEC_NAME.."\nStatus: "..(IS_AFK and "**AFK**" or "**Online**").."  •  Uptime: **"..uptime.."**".."\n\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}"
-    local thumbnail="https://www.roblox.com/headshot-thumbnail/image?userId="..player.UserId.."&width=150&height=150&format=png"
+    local thumbnail="https://thumbs.roblox.com/v1/users/avatar-headshot?userIds="..player.UserId.."&size=150x150&format=png&isCircular=false"
     local footerText="MONITORING DEVICE YURXZ v8.0  •  "..player.Name.."  •  "..waktu
     local body='{"username":'..enc("MONITORING DEVICE YURXZ")..',"avatar_url":'..enc(CONFIG.AVATAR_URL)..',"embeds":[{"title":'..enc("📡  YURXZ MONITOR  —  Laporan  #"..reportCount)..',"description":'..enc(desc)..',"color":'..color..',"fields":['..table.concat(fa,",")..'],"thumbnail":{"url":'..enc(thumbnail)..'},"footer":{"text":'..enc(footerText)..',"icon_url":'..enc(CONFIG.AVATAR_URL)..'}' ..'}]}'
     local ok,_=sendWebhook(body)
