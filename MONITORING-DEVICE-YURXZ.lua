@@ -257,7 +257,7 @@ local function sendReport()
     local SEP={name="\u{200b}",value="\u{200b}",inline=false}
     local fields={
         {name="🎣  Status",value="```"..fischSt.."```",inline=true},
-        {name="👤  Akun",value="```"..player.Name.."```",inline=true},
+        {name="👤  Akun",value="||"..player.Name.."||",inline=true},
         {name="📊  Kondisi",value="```"..statusEmoji.." "..overallStatus.."```",inline=true},
         SEP,
         {name="📶  Ping",value=dot(pingN,80,200).."  **"..pingN.." ms**",inline=true},
@@ -280,8 +280,13 @@ local function sendReport()
         {name="🕐  Waktu",value="`"..waktu.."`",inline=true},
     }
     local fa={}; for _,f in ipairs(fields) do table.insert(fa,encF(f)) end
-    local desc="**"..player.Name.."**  "..EXEC_ICON.."  "..EXEC_NAME.."\nStatus: "..(IS_AFK and "**AFK**" or "**Online**").."  •  Uptime: **"..uptime.."**".."\n\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}"
-    local thumbnail="https://thumbs.roblox.com/v1/users/avatar-headshot?userIds="..player.UserId.."&size=150x150&format=png&isCircular=false"
+    local desc="||"..player.Name.."||  "..EXEC_ICON.."  "..EXEC_NAME.."\nStatus: "..(IS_AFK and "**AFK**" or "**Online**").."  •  Uptime: **"..uptime.."**".."\n\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}\u{2015}"
+    local thumbnail=""
+    pcall(function()
+        local res=game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds="..player.UserId.."&size=150x150&format=Png&isCircular=false")
+        local url=res:match('"imageUrl":"(https://[^"]+)"')
+        if url then thumbnail=url end
+    end)
     local footerText="MONITORING DEVICE YURXZ v8.0  •  "..player.Name.."  •  "..waktu
     local body='{"username":'..enc("MONITORING DEVICE YURXZ")..',"avatar_url":'..enc(CONFIG.AVATAR_URL)..',"embeds":[{"title":'..enc("📡  YURXZ MONITOR  —  Laporan  #"..reportCount)..',"description":'..enc(desc)..',"color":'..color..',"fields":['..table.concat(fa,",")..'],"thumbnail":{"url":'..enc(thumbnail)..'},"footer":{"text":'..enc(footerText)..',"icon_url":'..enc(CONFIG.AVATAR_URL)..'}' ..'}]}'
     local ok,_=sendWebhook(body)
